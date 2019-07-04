@@ -1,3 +1,12 @@
+language: python
+cache: pip
+install:
+  - pip install -r requirements.txt
+
+script:
+  - nose2
+  - flake8 .
+
 env:
   global:
     secure: jFrS1RhN2SDAmFPoVuzGQUGsPRy94BDZtE4uiq+o9OLh3K8lTVvDUKcm1MsxQ7sQe/tsWmHbtqCIaEWqEcJK09jiToJg44Tz6LUOAJNIElxwiOwFGIS5qi7ZkXbA+IRJjIwVVSsaksX3YeY/7je3vj56qtGEz9LyNfDu6cDFfAwDamIyj5j9Sauio+xVoXynKzPEJ/3pxzPXtCRNiXm8znh1jOHsXuJlu1M6osGaxlLvG5e0G0dJwePMiE73RH923vMiwGWtK+uRj7QPM3GbOhV7LejzabY/6bdpAyTelHnBLf4JGnhVKvK1ThE3iy+bfWe/iLWjC8A4QIjLd+2bA/NTfmYUzBXizMtiJNSzVn5621rS2iPX83ve9jRp9Yl0FZI4lD/t9GUTAdh4fGMCEBS/e0M1HGa9Nx8IYSQqKPQRmHcItpIxYPYosrBtcUYQvd07wDwQDbQG7csxrwF9A89QppmwTjyuiwf/a7xGmdlo/vFibgB/BDMlPQNhORrybrf4/Jm2HkSOZXt2nSrl/7vfIRe5iJufrWkfzlUyD60klAm23h7rIUHLcP9DRvnVdonBp1HtQgzgOnV/LRTdLLX61hJyQ2GyYd++Oc+mIMR8TLCgXpym2W1IEoyTBQ8v3md8grOaBdi71OPkFghoSfzv6GroxCv6IT4hoQswqXw=
