@@ -18,10 +18,15 @@ class SecurityTrailsTests(unittest.TestCase):
         self.assertTrue(ping_response['success'])
 
     def test_return_error_message_values(self):
-        print(self.valid_api._return_error(401))
         self.assertEqual(self.valid_api._return_error(401),
                          "Invalid SecurityTrails API key")
         self.assertEqual(self.valid_api._return_error(429),
                          "Too many requests. Wait and try again.")
         self.assertEqual(self.valid_api._return_error(500),
                          "An internal error occured.")
+
+    def test_usage_returns_usage_values(self):
+        test_usage = self.valid_api.usage()
+        self.assertIsInstance(test_usage, dict)
+        self.assertIsInstance(test_usage['current_monthly_usage'], int)
+        self.assertIsInstance(test_usage['allowed_monthly_usage'], int)
