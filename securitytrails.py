@@ -7,6 +7,16 @@ class SecurityTrailsAPI():
         self.base_api_url = "https://api.securitytrails.com/v1/"
         self.headers = {'apikey': self.key, 'Content-Type': 'application/json'}
 
+    def find_associated_domains(self, domain):
+        find_domains_endpoint = (self.base_api_url +
+                                 'domain/{}/associated'.format(domain))
+        find_domains_endpoint = requests.get(find_domains_endpoint,
+                                             headers=self.headers)
+        if find_domains_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                            find_domains_endpoint.status_code))
+        return find_domains_endpoint.json()
+
     def get_domain(self, domain):
         get_domain_endpoint = self.base_api_url + 'domain/' + domain
         get_domain_response = requests.get(get_domain_endpoint,
