@@ -27,6 +27,11 @@ class SecurityTrailsTests(unittest.TestCase):
 
     def test_usage_returns_usage_values(self):
         test_usage = self.valid_api.usage()
+        print(test_usage)
         self.assertIsInstance(test_usage, dict)
         self.assertIsInstance(test_usage['current_monthly_usage'], int)
         self.assertIsInstance(test_usage['allowed_monthly_usage'], int)
+
+    def test_get_domain_endpoint_invalid_hostname(self):
+        with self.assertRaises(Exception):
+            self.valid_api.get_domain("Invalid!^%$&")
