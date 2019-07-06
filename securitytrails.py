@@ -24,7 +24,6 @@ class SecurityTrailsAPI():
         if list_subdomains_response.raise_for_status():
             raise Exception(self._return_error(
                 list_subdomains_response.status_code))
-        print(list_subdomains_response.json())
         return list_subdomains_response.json()
 
     def ping(self):
