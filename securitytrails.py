@@ -26,6 +26,16 @@ class SecurityTrailsAPI():
                             get_domain_endpoint.status_code))
         return get_domain_response.json()
 
+    def get_whois(self, domain):
+        get_whois_endpoint = (self.base_api_url +
+                              'domain/{}/whois'.format(domain))
+        get_whois_endpoint = requests.get(get_whois_endpoint,
+                                          headers=self.headers)
+        if get_whois_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                get_whois_endpoint.status_code))
+        return get_whois_endpoint.json()
+
     def list_subdomains(self, domain):
         list_subdomains_endpoint = (self.base_api_url +
                                     'domain/{}/subdomains'.format(domain))
