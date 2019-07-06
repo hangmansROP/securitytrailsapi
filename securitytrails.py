@@ -26,6 +26,16 @@ class SecurityTrailsAPI():
                 list_subdomains_response.status_code))
         return list_subdomains_response.json()
 
+    def list_tags(self, domain):
+        list_tags_endpoint = (self.base_api_url +
+                              'domain/{}/tags'.format(domain))
+        list_tags_response = requests.get(list_tags_endpoint,
+                                          headers=self.headers)
+        if list_tags_response.raise_for_status():
+            raise Exception(self._return_error(
+                list_tags_response.status_code))
+        return list_tags_response.json()
+
     def ping(self):
         ping_endpoint = self.base_api_url + 'ping'
         ping_response = requests.get(ping_endpoint, headers=self.headers)
