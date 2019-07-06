@@ -56,3 +56,8 @@ class SecurityTrailsTests(unittest.TestCase):
         self._rate_limit()
         with self.assertRaises(Exception):
             self.valid_api.find_associated_domains("google.com")
+
+    def test_get_whois_raises_exception(self):
+        self._rate_limit()
+        with self.assertRaises(Exception):
+            self.valid_api.get_whois("google.com")
