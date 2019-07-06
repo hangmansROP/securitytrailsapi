@@ -51,3 +51,8 @@ class SecurityTrailsTests(unittest.TestCase):
     def test_list_tags_returns_json_dict(self):
         self._rate_limit()
         self.assertIsInstance(self.valid_api.list_tags("google.com"), dict)
+
+    def test_find_associated_domains_returns_exception_no_sub(self):
+        self._rate_limit()
+        with self.assertRaises(Exception):
+            self.valid_api.find_associated_domains("google.com")
