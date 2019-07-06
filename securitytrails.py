@@ -7,6 +7,15 @@ class SecurityTrailsAPI():
         self.base_api_url = "https://api.securitytrails.com/v1/"
         self.headers = {'apikey': self.key, 'Content-Type': 'application/json'}
 
+    def get_domain(self, domain):
+        get_domain_endpoint = self.base_api_url + 'domain/' + domain
+        get_domain_response = requests.get(get_domain_endpoint,
+                                           headers=self.headers)
+        if get_domain_response.raise_for_status():
+            raise Exception(self._return_error(
+                            get_domain_endpoint.status_code))
+        return get_domain_response.json()
+
     def ping(self):
         ping_endpoint = self.base_api_url + 'ping'
         ping_response = requests.get(ping_endpoint, headers=self.headers)
