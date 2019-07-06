@@ -1,6 +1,7 @@
 import os
 import unittest
 import securitytrails
+from time import sleep
 
 
 class SecurityTrailsTests(unittest.TestCase):
@@ -9,11 +10,16 @@ class SecurityTrailsTests(unittest.TestCase):
         self.valid_api = securitytrails.SecurityTrailsAPI(self.apikey)
         self.invalid_api = securitytrails.SecurityTrailsAPI("INVALID")
 
+    @staticmethod
+    def _rate_limit():
+        sleep(2)
+
     def test_ping_exception_incorrect_api_key(self):
         with self.assertRaises(Exception):
             self.invalid_api.ping()
 
     def test_ping_response_content_equals_success(self):
+        self._rate_limit()
         ping_response = self.valid_api.ping()
         self.assertTrue(ping_response['success'])
 
@@ -26,6 +32,7 @@ class SecurityTrailsTests(unittest.TestCase):
                          "An internal error occured.")
 
     def test_usage_returns_usage_values(self):
+        self._rate_limit()
         test_usage = self.valid_api.usage()
         print(test_usage)
         self.assertIsInstance(test_usage, dict)
