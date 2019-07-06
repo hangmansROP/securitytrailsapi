@@ -34,7 +34,6 @@ class SecurityTrailsTests(unittest.TestCase):
     def test_usage_returns_usage_values(self):
         self._rate_limit()
         test_usage = self.valid_api.usage()
-        print(test_usage)
         self.assertIsInstance(test_usage, dict)
         self.assertIsInstance(test_usage['current_monthly_usage'], int)
         self.assertIsInstance(test_usage['allowed_monthly_usage'], int)
@@ -42,3 +41,7 @@ class SecurityTrailsTests(unittest.TestCase):
     def test_get_domain_endpoint_invalid_hostname(self):
         with self.assertRaises(Exception):
             self.valid_api.get_domain("Invalid!^%$&")
+
+    def test_list_subdomains_endpoint(self):
+        self.assertIsInstance(self.valid_api.list_subdomains(
+            "google.com"), dict)
