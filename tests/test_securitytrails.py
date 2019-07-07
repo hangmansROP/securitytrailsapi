@@ -63,6 +63,11 @@ class SecurityTrailsTests(unittest.TestCase):
         with self.assertRaises(Exception):
             self.valid_api.get_whois("google.com")
 
+    def test_history_by_record_returns_json_dict(self):
+        self._rate_limit()
+        self.assertIsInstance(self.valid_api.history_by_record(
+            "google.com", "a"), dict)
+
     def test_search_domain_filter_json(self):
         self._rate_limit()
         with self.assertRaises(Exception):
