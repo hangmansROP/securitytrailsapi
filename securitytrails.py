@@ -8,6 +8,30 @@ class SecurityTrailsAPI():
         self.base_api_url = "https://api.securitytrails.com/v1/"
         self.headers = {'apikey': self.key, 'Content-Type': 'application/json'}
 
+    def explore_ips(self, ipaddress):
+        explore_ips_endpoint = (self.base_api_url +
+                                'ips/nearby/{}'.format(ipaddress))
+        explore_ips_endpoint = requests.get(explore_ips_endpoint,
+                                            headers=self.headers)
+        if explore_ips_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                explore_ips_endpoint.status_code))
+        return explore_ips_endpoint.json()
+
+    def feeds_domains(self, record_type, search_filter, tld, ns, date):
+        find_domains_endpoint = (self.base_api_url +
+                                 'feeds/domains/{}'.format(record_type))
+        find_domains_endpoint = (self.base_api_url +
+                                 'feeds/domains/{}?' +
+                                 'filter={}&tld={}&ns={}&date={}'.format(
+                                     search_filter, tld, ns, date))
+        find_domains_endpoint = requests.get(find_domains_endpoint,
+                                             headers=self.headers)
+        if find_domains_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                find_domains_endpoint.status_code))
+        return find_domains_endpoint.json()
+
     def find_associated_domains(self, domain):
         find_domains_endpoint = (self.base_api_url +
                                  'domain/{}/associated'.format(domain))
@@ -48,7 +72,6 @@ class SecurityTrailsAPI():
                 history_by_domain_endpoint.status_code))
         return history_by_domain_endpoint.json()
 
-
     def history_by_record(self, domain, record_type):
         history_by_record_endpoint = (self.base_api_url +
                                       'history/{}/dns/{}'.format(
@@ -59,6 +82,18 @@ class SecurityTrailsAPI():
             raise Exception(self._return_error(
                 history_by_record_endpoint.status_code))
         return history_by_record_endpoint.json()
+
+    def ip_search_stats(self, query):
+        ip_search_stats_endpoint = (self.base_api_url + 'domains/stats')
+        ip_param = '{"query": ' + query + '}'
+        ip_search_stats_endpoint = requests.post(
+            ip_search_stats_endpoint,
+            headers=self.headers,
+            data=ip_param)
+        if ip_search_stats_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                ip_search_stats_endpoint.status_code))
+        return ip_search_stats_endpoint.json()
 
     def list_subdomains(self, domain):
         list_subdomains_endpoint = (self.base_api_url +
@@ -113,7 +148,7 @@ class SecurityTrailsAPI():
                                       + 'include_ips=%s&page=%s'
                                       + '&scroll=%s', include_ips,
                                       page, scroll)
-        query_param = '{"query": %s', query
+        query_param = '{"query": %s}', query
         search_domain_dsl_endpoint = requests.post(
             search_domain_dsl_endpoint,
             headers=self.headers,
@@ -122,6 +157,17 @@ class SecurityTrailsAPI():
             raise Exception(self._return_error(
                 search_domain_dsl_endpoint.status_code))
         return search_domain_dsl_endpoint.json()
+
+    def search_ips(self, query, page):
+        search_ips = (self.base_api_url +
+                      'ips/list?&page={}'.format(page))
+        ip_params = '{"query": %s}', query
+        search_ips = requests.post(search_ips,
+                                   headers=self.headers, data=ip_params)
+        if search_ips.raise_for_status():
+            raise Exception(self._return_error(
+                search_ips.status_code))
+        return search_ips.json()
 
     def search_statistics(self, search_filter):
         search_statistics_endpoint = (self.base_api_url + 'domains/stats')

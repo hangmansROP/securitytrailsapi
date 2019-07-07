@@ -88,6 +88,26 @@ class SecurityTrailsTests(unittest.TestCase):
         with self.assertRaises(Exception):
             self.valid_api.search_statistics(self.search_filter)
 
+    def test_explore_ips_returns_dict(self):
+        self._rate_limit()
+        self.assertIsInstance(self.valid_api.explore_ips(
+            "8.8.8.8"), dict)
+
+    def test_search_ips_raises_exception(self):
+        self._rate_limit()
+        with self.assertRaises(Exception):
+            self.valid_api.search_ips("8.8.8.8", 1)
+
+    def test_ip_search_stats_returns_dict(self):
+        self._rate_limit()
+        self.assertIsInstance(self.valid_api.ip_search_stats(
+            "8.8.8.8"), dict)
+
+    def test_feeds_domains_raises_exception(self):
+        self._rate_limit()
+        self.assertIsInstance(self.valid_api.feeds_domains(
+            "all", "ctld", "com", True, "2000-01-01"), dict)
+
     def test_api_filter_instatiation(self):
         self.assertIs(self.search_filter.ipv4, '')
         self.assertIs(self.search_filter.ipv6, '')
