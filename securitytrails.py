@@ -37,6 +37,18 @@ class SecurityTrailsAPI():
                 get_whois_endpoint.status_code))
         return get_whois_endpoint.json()
 
+    def history_by_domain(self, domain, page):
+        history_by_domain_endpoint = (self.base_api_url +
+                                      'history/{}/whois?page={}'.format(
+                                          domain, page))
+        history_by_domain_endpoint = requests.get(history_by_domain_endpoint,
+                                                  headers=self.headers)
+        if history_by_domain_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                history_by_domain_endpoint.status_code))
+        return history_by_domain_endpoint.json()
+
+
     def history_by_record(self, domain, record_type):
         history_by_record_endpoint = (self.base_api_url +
                                       'history/{}/dns/{}'.format(

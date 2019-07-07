@@ -68,17 +68,22 @@ class SecurityTrailsTests(unittest.TestCase):
         self.assertIsInstance(self.valid_api.history_by_record(
             "google.com", "a"), dict)
 
-    def test_search_domain_filter_json(self):
+    def test_history_by_domain_raises_exception(self):
+        self._rate_limit()
+        with self.assertRaises(Exception):
+            self.valid_api.history_by_domain("google.com", 1)
+
+    def test_search_domain_filter__raises_exception(self):
         self._rate_limit()
         with self.assertRaises(Exception):
             self.valid_api.search_domain_filter(self.search_filter, True, 1)
 
-    def test_search_domain_dsl_json(self):
+    def test_search_domain_dsl_raises_exception(self):
         self._rate_limit()
         with self.assertRaises(Exception):
             self.valid_api.search_domain_dsl("query", True, 1, False)
 
-    def test_search_statistics_returns_json(self):
+    def test_search_statistics_raises_exception(self):
         self._rate_limit()
         with self.assertRaises(Exception):
             self.valid_api.search_statistics(self.search_filter)
