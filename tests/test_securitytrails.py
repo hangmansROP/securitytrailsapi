@@ -68,6 +68,11 @@ class SecurityTrailsTests(unittest.TestCase):
         with self.assertRaises(Exception):
             self.valid_api.search_domain_filter(self.search_filter, True, 1)
 
+    def test_search_domain_dsl_json(self):
+        self._rate_limit()
+        with self.assertRaises(Exception):
+            self.valid_api.search_domain_dsl("query", True, 1, False)
+
     def test_search_statistics_returns_json(self):
         self._rate_limit()
         with self.assertRaises(Exception):

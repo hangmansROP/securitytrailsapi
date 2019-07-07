@@ -85,6 +85,21 @@ class SecurityTrailsAPI():
                 search_domain_filter_endpoint.status_code))
         return search_domain_filter_endpoint.json()
 
+    def search_domain_dsl(self, query, include_ips, page, scroll):
+        search_domain_dsl_endpoint = (self.base_api_url + 'domains/list?'
+                                      + 'include_ips=%s&page=%s'
+                                      + '&scroll=%s', include_ips,
+                                      page, scroll)
+        query_param = '{"query": %s', query
+        search_domain_dsl_endpoint = requests.post(
+            search_domain_dsl_endpoint,
+            headers=self.headers,
+            data=query_param)
+        if search_domain_dsl_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                search_domain_dsl_endpoint.status_code))
+        return search_domain_dsl_endpoint.json()
+
     def search_statistics(self, search_filter):
         search_statistics_endpoint = (self.base_api_url + 'domains/stats')
         filter_param = '{"filter": ' + json.dumps(search_filter.__dict__) + '}'
