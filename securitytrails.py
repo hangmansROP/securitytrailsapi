@@ -71,6 +71,20 @@ class SecurityTrailsAPI():
                           500: "An internal error occured."}
         return error_messages[status_code]
 
+    def search_domain_filter(self, search_filter, include_ips, page):
+        search_domain_filter_endpoint = (self.base_api_url + 'domains/list?'
+                                         + 'include_ips={}&page={}'.format(
+                                             include_ips, page))
+        filter_param = '{"filter": ' + json.dumps(search_filter.__dict__) + '}'
+        search_domain_filter_endpoint = requests.post(
+            search_domain_filter_endpoint,
+            headers=self.headers,
+            data=filter_param)
+        if search_domain_filter_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                search_domain_filter_endpoint.status_code))
+        return search_domain_filter_endpoint.json()
+
     def search_statistics(self, search_filter):
         search_statistics_endpoint = (self.base_api_url + 'domains/stats')
         filter_param = '{"filter": ' + json.dumps(search_filter.__dict__) + '}'
