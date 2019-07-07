@@ -1,3 +1,4 @@
+import json
 import requests
 
 
@@ -70,9 +71,47 @@ class SecurityTrailsAPI():
                           500: "An internal error occured."}
         return error_messages[status_code]
 
+    def search_statistics(self, search_filter):
+        search_statistics_endpoint = (self.base_api_url + 'domains/stats')
+        filter_param = '{"filter": ' + json.dumps(search_filter.__dict__) + '}'
+        search_statistics_endpoint = requests.post(
+            search_statistics_endpoint,
+            headers=self.headers,
+            data=filter_param)
+        if search_statistics_endpoint.raise_for_status():
+            raise Exception(self._return_error(
+                search_statistics_endpoint.status_code))
+        return search_statistics_endpoint.json()
+
     def usage(self):
         usage_endpoint = self.base_api_url + 'account/usage'
         usage_response = requests.get(usage_endpoint, headers=self.headers)
         if usage_response.raise_for_status():
             raise Exception(self._return_error(usage_response.status_code))
         return usage_response.json()
+
+
+class SecurityTrailsAPIFilter():
+    def __init__(self):
+        self.ipv4 = ''
+        self.ipv6 = ''
+        self.apex_domain = ''
+        self.keyword = ''
+        self.mx = ''
+        self.ns = ''
+        self.cname = ''
+        self.subdomain = ''
+        self.soa_email = ''
+        self.tld = ''
+        self.whois_email = ''
+        self.whois_street1 = ''
+        self.whois_street2 = ''
+        self.whois_street3 = ''
+        self.whois_street4 = ''
+        self.whois_telephone = ''
+        self.whois_postalCode = ''
+        self.whois_organization = ''
+        self.whois_name = ''
+        self.whois_fax = ''
+        self.whois_city = ''
+        self.query = ''
