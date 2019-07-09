@@ -1,15 +1,15 @@
 import os
 import unittest
-import securitytrails
+from securitytrailsapi import api_handler
 from time import sleep
 
 
 class SecurityTrailsTests(unittest.TestCase):
     def setUp(self):
         self.apikey = os.environ['API_KEY']
-        self.invalid_api = securitytrails.SecurityTrailsAPI("INVALID")
-        self.search_filter = securitytrails.SecurityTrailsAPIFilter()
-        self.valid_api = securitytrails.SecurityTrailsAPI(self.apikey)
+        self.invalid_api = api_handler.SecurityTrailsAPI("INVALID")
+        self.search_filter = api_handler.SecurityTrailsAPIFilter()
+        self.valid_api = api_handler.SecurityTrailsAPI(self.apikey)
 
     @staticmethod
     def _rate_limit():
