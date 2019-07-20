@@ -1,5 +1,5 @@
 # SecurityTrails API
-[![Build Status](https://travis-ci.org/hangmansROP/securitytrails-api.svg?branch=master)](https://travis-ci.org/hangmansROP/securitytrails-api) 
+[![Latest Version](https://img.shields.io/pypi/v/securitytrailsapi.svg)](https://pypi.org/project/securitytrailsapi/)
 [![Known Vulnerabilities](https://snyk.io//test/github/hangmansROP/securitytrails-api/badge.svg?targetFile=requirements.txt)](https://snyk.io//test/github/hangmansROP/securitytrails-api?targetFile=requirements.txt)
 [![Documentation Status](https://readthedocs.org/projects/securitytrailsapi/badge/?version=latest)](https://securitytrailsapi.readthedocs.io/en/latest/?badge=latest)
 
